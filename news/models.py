@@ -4,6 +4,21 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class Category(models.Model):
+    """ Класс категории квеста
+    """
+    title = models.CharField("Название", max_length=50)
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+    def __str__(self):
+        return self.title
+
+
+
+
 class News(models.Model):
     """ #156
         Вообще это класс новостей, но у нас новости будут выполнять роль квестов.
@@ -23,3 +38,10 @@ class News(models.Model):
     time_to_fade = models.DateTimeField("Время протухания квеста")
     level = models.TextField("Допутимые уровни")
 
+
+    class Meta:
+        verbose_name = "Квест"
+        verbose_name_plural = "Квесты"
+
+    def __str__(self):
+        return self.title
