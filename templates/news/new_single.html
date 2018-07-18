@@ -1,4 +1,12 @@
+
+{% extends 'news/base.html' %}
+{% block desc %}{{ new.description }}{% endblock desc %}
+{% block keywords %}{{ new.keywords }}{% endblock keywords %}
+{% block title %}{{ new.title }}{% endblock title %}
+
+{% block content %}
 <h2>{{ new.title }}</h2>
 <p>{{ new.text }}</p><hr>
 <p>Категория - {{ new.category }}</p>
 <p>Автор: {{ new.user }}-{{ new.create }}</p>
+{% endblock content %}
