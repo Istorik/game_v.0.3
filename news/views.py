@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from news.models import News
+from news.models import News, Miner
 
 
 
@@ -14,3 +14,9 @@ def new_single(request, pk):
     """
     new = get_object_or_404(News, id=pk)
     return render(request, "news/new_single.html", {"new": new})
+
+def gerbologi(request, pk):
+    """ Вывод данных по цветку
+    """
+    miner = get_object_or_404(Miner, id=pk)
+    return render(request, "news/gerbalogi.html", {"miner": miner})

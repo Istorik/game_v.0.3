@@ -54,3 +54,24 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Miner(models.Model):
+    """ #152
+        Классы добываемых ресурсов
+        Изначально сделаем 3 добываемых ресурса с 3 уровнями усложнения
+        condition Условие сбора ресурса
+        condition_text описание Условие сбора ресурса
+    """
+    name = models.CharField("Имя", max_length=100)
+    info = models.TextField("Описание ресурса")
+    condition_text = models.TextField("Описание условия сбора ресурса")
+    condition = models.TextField("условия сбора ресурса")
+
+    class Meta:
+        verbose_name = "Ресурс"
+        verbose_name_plural = "Ресурсы"
+
+    def __str__(self):
+        return self.name
+

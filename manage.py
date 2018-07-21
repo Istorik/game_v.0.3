@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/home/istorik/PycharmProjects/untitled/venv/bin/python3
 import os
 import sys
 
