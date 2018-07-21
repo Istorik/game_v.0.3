@@ -6,3 +6,4 @@ class EntryForm(forms.Form):
     """
     name = forms.CharField(max_length=100)
     height = forms.IntegerField()
+    height_random = forms.HiddenInput()

@@ -58,4 +58,4 @@ def miner(request, pk):
         form = EntryForm()
         miner = get_object_or_404(Miner, id=pk)
         height = randint(3, 21)
-    return render(request, "news/miner.html", {"miner": miner, "form":form, 'heignt': height})
+    return render(request, "news/miner.html", {"miner": miner, "form": form, 'heignt': height})
