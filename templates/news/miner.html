@@ -1,0 +1,18 @@
+{% extends 'news/base.html' %}
+{% block title %}{{ miner.name }}{% endblock title %}
+
+{% block content %}
+<h2>{{ miner.name }}</h2>
+<p>{{ miner.info }}</p><hr>
+
+    <p>{{ miner.condition_text }}</p>
+    <p>Высота цветка {{ heignt }}</p>
+
+    {% if form %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form}}
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+{% endblock content %}
