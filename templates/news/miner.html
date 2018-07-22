@@ -1,4 +1,6 @@
 {% extends 'news/base.html' %}
+{% load static %}
+
 {% block title %}{{ miner.name }}{% endblock title %}
 
 {% block content %}
@@ -9,10 +11,42 @@
     <p>Высота цветка {{ heignt }}</p>
 
     {% if form %}
-        <form method="post">
+        <form method="post" action="{% url 'miner_add' %}">
             {% csrf_token %}
-            {{ form}}
-            <button type="submit">Submit</button>
+            <input type="number" id="user_height" name="user_height" placeholder="Высота среза">
+            <input type="hidden" id="sys_height" name="sys_height" value="{{ heignt }}">
+
         </form>
+        <button id="miner_get_button">Срезать</button>
     {% endif %}
+    <div id="miner_message"></div>
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+    $("#miner_get_button").click(function () {
+    console.log("test button")
+    $.ajax({
+        type: "GET",
+        url: "/miner_add",
+        data: {
+            'user_height': $("#user_height").val(),
+            'sys_height': $("#sys_height").val(),
+        },
+        dataType: "text",
+        cache: false,
+        success: function (data) {
+            console.log(data);
+            if (data == 'True') {
+                $("#miner_message").text("Ресурс добыт!");
+                $("#miner_message").attr("style", "color:black;");
+                return true;
+            }
+        }
+    });
+});
+    </script>
+
 {% endblock content %}
+
+

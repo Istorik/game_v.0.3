@@ -1,9 +1,16 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+    {% block keywords %}{% endblock keywords %}
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'news/css/style.css' %}">
+</head>
+<body>
+    {% block content %}
+    {% endblock content %}
+</body>
 
-{% block desc %}{% endblock desc %}
-{% block keywords %}{% endblock keywords %}
-{% block title %}{% endblock title %}
+{% block add_script %}{% endblock %}
 
-
-{% block content %}
-{% endblock content %}
+</html>

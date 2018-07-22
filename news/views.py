@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from news.models import News, Miner
 from news.forms import EntryForm
 
@@ -59,3 +59,19 @@ def miner(request, pk):
         miner = get_object_or_404(Miner, id=pk)
         height = randint(3, 21)
     return render(request, "news/miner.html", {"miner": miner, "form": form, 'heignt': height})
+
+
+def miner_add(request):
+    print('test 0')
+    if 'GET' == request.method:
+        print('test 1')
+        user_height = int(request.GET['user_height'])
+        sys_height = int(request.GET['sys_height'])
+
+        if user_height == sys_height//3*2:
+            return HttpResponse('True', content_type='text/html')
+        else:
+            return HttpResponse('False', content_type='text/html')
+
+    else:
+        pass
