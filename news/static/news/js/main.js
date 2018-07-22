@@ -19,6 +19,10 @@ $(document).ready(function () {
                 $("#miner_message").attr("style", "color:black;");
                 return true;
             }
+            else {
+                $("#miner_message").text("Ресурс испорчен!");
+                $("#miner_message").attr("style", "color:red;");
+            }
         }
     });
 });

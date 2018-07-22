@@ -43,7 +43,6 @@ def add(request):
 
 def miner(request, pk):
     """ Вывод данных по ресурсу
-        Сбор ресурса
     """
     if 'POST' == request.method:
         form = EntryForm(request.POST)
@@ -62,9 +61,11 @@ def miner(request, pk):
 
 
 def miner_add(request):
-    print('test 0')
-    if 'GET' == request.method:
-        print('test 1')
+    """ Тестовый вариант сбора ресурса через JQwery
+    :param request:
+    :return:
+    """
+    if request.GET:
         user_height = int(request.GET['user_height'])
         sys_height = int(request.GET['sys_height'])
 
