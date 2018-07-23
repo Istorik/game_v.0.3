@@ -20,42 +20,34 @@ def new_single(request, pk):
     return render(request, "news/new_single.html", {"new": new})
 
 
-def gerbologi(request, pk):
-    """ Вывод данных по цветку
-    """
-    miner = get_object_or_404(Miner, id=pk)
-    return render(request, "news/miner.html", {"miner": miner})
-
-
-def add(request):
-    """ Тестовая функция сбора ресурсов
-    """
-    if 'POST' == request.method:
-        form = EntryForm(request.POST)
-
-        if form.is_valid():
-            return HttpResponseRedirect('/')
-    else:
-        form = EntryForm()
-
-    return render(request, 'news/forms.html', {'form': form})
-
-
 def miner(request, pk):
     """ Вывод данных по ресурсу
         Сбор ресурса
+    # Таймаут
+    # Пост
+        # Тест умения
+            # Есть место в инвентаре
+        # Не правильный
+    # Открыт в первый раз
+    # Генератор случайного цветка.
     """
-    if 'POST' == request.method:
-        form = EntryForm(request.POST)
-        if form.is_valid():
-            # Тест данных с формы
-                # Тест прошел, добавить цветок в инвентарь
-            if form.cleaned_data['height'] == 21//3*2:
-                print('Ok')
-            # таймаут на цветок для этого User
-            return HttpResponseRedirect('/')
+    time_out_miner = '01.01.1999'
+    miner = get_object_or_404(Miner, id=pk)
+    height = randint(3, 21)
+
+    if not time_out_miner:
+        text = 'Ресурс еще не восстановился'
+        return render(request, "news/miner.html", {"miner": miner, "text": text})
+
+    if request.POST:
+        # Тест формы
+        if int(request.POST['user_height']) == int(request.POST['sys_height'])//3*2:
+            # Тест умения
+            text = 'Ресурс собран {}'.format('1')
+                # Тест места в инвентаре
+        else:
+            text = 'Ресурс испорчен'
+        return render(request, "news/miner.html", {"miner": miner, "text": text})
     else:
         form = EntryForm()
-        miner = get_object_or_404(Miner, id=pk)
-        height = randint(3, 21)
     return render(request, "news/miner.html", {"miner": miner, "form": form, 'heignt': height})

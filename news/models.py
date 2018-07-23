@@ -56,17 +56,39 @@ class News(models.Model):
         return self.title
 
 
+class Category_miner(models.Model):
+    """ Класс категории Добываемого ресурса
+    """
+    title = models.CharField("Название", max_length=50)
+
+    class Meta:
+        verbose_name = "Категория ресурса"
+        verbose_name_plural = "Категории ресурсов"
+
+    def __str__(self):
+        return self.title
+
+
 class Miner(models.Model):
     """ #152
         Классы добываемых ресурсов
         Изначально сделаем 3 добываемых ресурса с 3 уровнями усложнения
         condition Условие сбора ресурса
         condition_text описание Условие сбора ресурса
+        category Категория добываемого ресурса
     """
     name = models.CharField("Имя", max_length=100)
     info = models.TextField("Описание ресурса")
     condition_text = models.TextField("Описание условия сбора ресурса")
     condition = models.TextField("условия сбора ресурса")
+    level = models.TextField("Уровень", null=1)
+
+    category = models.ForeignKey(
+        Category_miner,
+        verbose_name="Категория ресурса",
+        on_delete=models.SET_NULL,
+        null=True
+    )
 
     class Meta:
         verbose_name = "Ресурс"

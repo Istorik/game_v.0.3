@@ -2,17 +2,25 @@
 {% block title %}{{ miner.name }}{% endblock title %}
 
 {% block content %}
+    <hr>
 <h2>{{ miner.name }}</h2>
-<p>{{ miner.info }}</p><hr>
+<p>{{ miner.info }}</p>
 
     <p>{{ miner.condition_text }}</p>
-    <p>Высота цветка {{ heignt }}</p>
+    {% if text %}
+        <p>{{ text }}</p>
+    {% else %}
+        <p>Высота цветка {{ heignt }}</p>
+    {% endif %}
 
     {% if form %}
-        <form method="post">
+        <form method="post" action='#'>
             {% csrf_token %}
-            {{ form}}
-            <button type="submit">Submit</button>
+
+            <input type="number" name="user_height" placeholder="Высота среза">
+            <input type="hidden" name="sys_height" value="{{ heignt }}">
+            <button type="submit">Срезать</button>
         </form>
+
     {% endif %}
 {% endblock content %}
