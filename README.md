@@ -35,7 +35,17 @@
 7. Помещение в котором мы наклеем QR-коды для игры. В прошоы раз понадобилось порядка 50 наклеек. В этот раз долюно быть больше.
 
 
+О том как пользоваться вертуальным окружением, я тут рассказывать не буду, Хабр Вам в помощь. 
 
 pip install django2
+
 pip install django-allauth
+
+
+
+./manage.py makemigrations
+
+./manage.py migrate
+
+./manage.py createsuperuser
 
