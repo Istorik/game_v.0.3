@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+#from django.contrib.postgres.fields import JSONField
 
 # Create your models here.
 
@@ -96,4 +97,19 @@ class Miner(models.Model):
 
     def __str__(self):
         return self.name
+
+def inventar_default():
+    return {'bag': {'size': 6, 'inventar': [1,2,3,4,5,6]}}
+
+#class Inventar(models.Model):
+
+#    user = models.ForeignKey(
+#        User,
+#        verbose_name="Название команды",
+#        on_delete=models.CASCADE)
+
+#    date = JSONField(default=inventar_default)
+
+#    def __str__(self):
+#        return self.date
 

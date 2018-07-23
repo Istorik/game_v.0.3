@@ -20,7 +20,7 @@ def new_single(request, pk):
     return render(request, "news/new_single.html", {"new": new})
 
 
-def miner(request, pk):
+def miner(request, pk, qr_id):
     """ Вывод данных по ресурсу
         Сбор ресурса
     # Таймаут
@@ -43,7 +43,7 @@ def miner(request, pk):
         # Тест формы
         if int(request.POST['user_height']) == int(request.POST['sys_height'])//3*2:
             # Тест умения
-            text = 'Ресурс собран {}'.format('1')
+            text = 'Ресурс собран {}'.format(qr_id)
                 # Тест места в инвентаре
         else:
             text = 'Ресурс испорчен'
