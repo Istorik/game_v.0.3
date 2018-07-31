@@ -3,6 +3,8 @@ from django.http import HttpResponseRedirect
 from news.models import News, Miner
 from news.forms import EntryForm
 
+from news.logic import test_free_space_in_inventory, collection_time_test, test_skill, get_update_miner
+
 from random import randint
 
 
@@ -27,26 +29,25 @@ def miner(request, pk, qr_id):
     # Пост
         # Тест умения
             # Есть место в инвентаре
-        # Не правильный
     # Открыт в первый раз
     # Генератор случайного цветка.
     """
-    time_out_miner = '01.01.1999'
     miner = get_object_or_404(Miner, id=pk)
     height = randint(3, 21)
 
-    if not time_out_miner:
+    if not collection_time_test(qr_id):
         text = 'Ресурс еще не восстановился'
         return render(request, "news/miner.html", {"miner": miner, "text": text})
 
     if request.POST:
-        # Тест формы
-        if int(request.POST['user_height']) == int(request.POST['sys_height'])//3*2:
-            # Тест умения
+    # Тест формы
+        if test_free_space_in_inventory(1) and test_skill(request.POST):
+        # Тест умения and Тест места в инвентаре
             text = 'Ресурс собран {}'.format(qr_id)
-                # Тест места в инвентаре
+            get_update_miner(qr_id, 2)
         else:
-            text = 'Ресурс испорчен'
+            text = '''Ресурс испорчен.
+            Возможно Вам не хватило навыка или у Вас кончилось место в инвентаре'''
         return render(request, "news/miner.html", {"miner": miner, "text": text})
     else:
         form = EntryForm()
