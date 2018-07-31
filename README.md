@@ -37,9 +37,8 @@
 
 О том как пользоваться вертуальным окружением, я тут рассказывать не буду, Хабр Вам в помощь. 
 
-pip install django2
-
-pip install django-allauth
+pip3 install django
+pip3 install django-allauth
 
 
 
