@@ -38,3 +38,7 @@ def get_update_miner(qr, user):
     '''
     print(qr)
     pass
+
+
+def update_qr_code(qr):
+    pass

@@ -2,6 +2,12 @@ from django.db import models
 from django.contrib.auth import get_user_model
 #from django.contrib.postgres.fields import JSONField
 
+#dlerkh работа диспачера с сигналами
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+import os, pyqrcode, uuid
+
+
 # Create your models here.
 
 User = get_user_model()
@@ -56,47 +62,6 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
-
-class Category_miner(models.Model):
-    """ Класс категории Добываемого ресурса
-    """
-    title = models.CharField("Название", max_length=50)
-
-    class Meta:
-        verbose_name = "Категория ресурса"
-        verbose_name_plural = "Категории ресурсов"
-
-    def __str__(self):
-        return self.title
-
-
-class Miner(models.Model):
-    """ #152
-        Классы добываемых ресурсов
-        Изначально сделаем 3 добываемых ресурса с 3 уровнями усложнения
-        condition Условие сбора ресурса
-        condition_text описание Условие сбора ресурса
-        category Категория добываемого ресурса
-    """
-    name = models.CharField("Имя", max_length=100)
-    info = models.TextField("Описание ресурса")
-    condition_text = models.TextField("Описание условия сбора ресурса")
-    condition = models.TextField("условия сбора ресурса")
-    level = models.TextField("Уровень", null=1)
-
-    category = models.ForeignKey(
-        Category_miner,
-        verbose_name="Категория ресурса",
-        on_delete=models.SET_NULL,
-        null=True
-    )
-
-    class Meta:
-        verbose_name = "Ресурс"
-        verbose_name_plural = "Ресурсы"
-
-    def __str__(self):
-        return self.name
 
 class BaseItems(models.Model):
     '''
@@ -165,7 +130,6 @@ class Inventory(models.Model):
     slot = models.IntegerField(
         choices=slot_list,
         default=9)
-
     
     class Meta:
         verbose_name = 'Инвентарь игроков'
@@ -177,18 +141,46 @@ class Inventory(models.Model):
             self.id_item,
         )
 
+class BaseQrCode(models.Model):
+    '''
+    ====inventory===============================
+    | id_qrcore   | lastupdate | resourse_type |
+    | xxx-xxx-xxx | now()      |               |
+  
+    '''
+
+    id_qrcore = models.CharField("Id QR code",max_length=64)
+    lastupdate = models.DateTimeField(auto_now_add=True)
+    resource_type_list = (
+        ('herb','трава'),
+        ('ore','руда'),
+        ('wool','шерсть')
+    )
+    resource_type = models.CharField(
+        choices=resource_type_list,
+        default='herb',
+        max_length=12)
+
+    class Meta:
+        verbose_name = 'база QR кодов'
+        verbose_name_plural = 'база QR кодов'
+
+    def __str__(self):
+        return "[{}] {}".format(
+            self.resource_type,
+            self.id_qrcore,
+        )
+
+@receiver(post_save, sender = BaseQrCode)
+def _create_qrcode(instance, **kwargs):
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    instance.id_qrcore = str(uuid.uuid4())
+    print(instance)
+    img = pyqrcode.create(instance.id_qrcore)
+    img.png('{}/qrcode/{}.png'.format(BASE_DIR,instance.id_qrcore),scale=6)
+    instance.id_qrcore.save()
+
+
 def inventar_default():
     return {'bag': {'size': 6, 'inventar': [1,2,3,4,5,6]}}
-
-#class Inventar(models.Model):
-
-#    user = models.ForeignKey(
-#        User,
-#        verbose_name="Название команды",
-#        on_delete=models.CASCADE)
-
-#    date = JSONField(default=inventar_default)
-
-#    def __str__(self):
-#        return self.date
 

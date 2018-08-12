@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from news.models import News, Miner
+from news.models import News
 from news.forms import EntryForm
 
 from news.logic import test_free_space_in_inventory, collection_time_test, test_skill, get_update_miner
@@ -44,7 +44,9 @@ def miner(request, pk, qr_id):
         if test_free_space_in_inventory(1) and test_skill(request.POST):
         # Тест умения and Тест места в инвентаре
             text = 'Ресурс собран {}'.format(qr_id)
-            get_update_miner(qr_id, 2)
+            #get_update_miner(qr_id, 2)
+            update_qr_code(qr_id)
+            collect_loot(id_owner,id_item)
         else:
             text = '''Ресурс испорчен.
             Возможно Вам не хватило навыка или у Вас кончилось место в инвентаре'''
