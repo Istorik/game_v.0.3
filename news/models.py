@@ -98,6 +98,57 @@ class Miner(models.Model):
     def __str__(self):
         return self.name
 
+class BaseItems(models.Model):
+    '''
+    =====base_items======================================================================================
+    | id_item | item_name   | item_desc           | options             | type_slot | item_type | level |
+    | 101     | шапка ушанка| одевается на голову | arm=1.0             | 1         | cloth     | 1     |
+    | 1001    | цветок 1    | ростет на лугу      | craft=16,17         | 10        | resource  | 0     |
+
+    '''
+    id_item = models.IntegerField(default=0)
+    item_name = models.CharField('Название', max_length=64)
+    item_desc = models.TextField('Описание предмета')
+    options = models.TextField('характеристики')
+    type_slot_list = (
+        ('1','1_шлем'),
+        ('2','2_торс'),
+        ('3','3_левая рука'),
+        ('4','4_правая рука'),
+        ('5','5_перчатки'),
+        ('6','6_Штаны'),
+        ('7','7_боты'),
+        ('8','8_пояс'),
+        ('9','9_сумка'))
+
+    type_slot = models.CharField('номер слота',
+        choices=type_slot_list,
+        default=1,
+        max_length=64)
+
+    item_type_list = (
+        ('cloth','cloth'),
+        ('chainmail','chainmail'),
+        ('plate','plate'),
+        ('tool','tool'),
+        ('resource','resource'))
+
+    item_type = models.CharField('тип предмета',
+        choices=item_type_list,
+        default='cloth',
+        max_length=32)
+    
+   
+    class Meta:
+        verbose_name = 'База Предметов'
+        verbose_name_plural = 'База Предметов'
+
+    def __str__(self):
+        return "[{}] {}".format(
+            self.id_item,
+            self.item_name,
+        )
+
 def inventar_default():
     return {'bag': {'size': 6, 'inventar': [1,2,3,4,5,6]}}
 

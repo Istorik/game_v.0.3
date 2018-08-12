@@ -1,4 +1,3 @@
-#!/home/istorik/PycharmProjects/game/venv/bin/python3
 import os
 import sys
 
