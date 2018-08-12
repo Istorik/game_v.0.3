@@ -1,4 +1,7 @@
+from django.shortcuts import render, get_object_or_404
+from news.models import BaseQrCode
 
+from datetime import datetime, timedelta
 
 def test_free_space_in_inventory(user):
     '''
@@ -16,6 +19,10 @@ def collection_time_test(id_qr):
     :param id_qr:
     :return: True если ресурс тоступен
     '''
+    qr_base = BaseQrCode.objects.filter(id_qrcore=id_qr)
+    t_delta = datetime.now() - timedelta(minutes=3)
+#    if qr_base.lastupdate < t_delta:
+#       return False
     return True
 
 def test_skill(f):

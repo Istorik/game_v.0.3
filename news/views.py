@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from news.models import News
+from news.models import News, BaseItems
 from news.forms import EntryForm
 
 from news.logic import test_free_space_in_inventory, collection_time_test, test_skill, get_update_miner
@@ -32,7 +32,7 @@ def miner(request, pk, qr_id):
     # Открыт в первый раз
     # Генератор случайного цветка.
     """
-    miner = get_object_or_404(Miner, id=pk)
+    miner = get_object_or_404(BaseItems, id_item=pk)
     height = randint(3, 21)
 
     if not collection_time_test(qr_id):

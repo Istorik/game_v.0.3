@@ -70,6 +70,7 @@ class BaseItems(models.Model):
     | 101     | шапка ушанка| одевается на голову | arm=1.0             | 1         | cloth     | 1     |
     | 1001    | цветок 1    | ростет на лугу      | craft=16,17         | 10        | resource  | 0     |
 
+    База всех предметов
     '''
     id_item = models.IntegerField(default=0)
     item_name = models.CharField('Название', max_length=64)
@@ -118,7 +119,8 @@ class Inventory(models.Model):
     ====inventory================
     | id_owner | id_item | slot |
     | 37       | 1001    | 9    |
-  
+
+    Инвентарь героя
     '''
 
     id_owne = models.IntegerField(default=0)

@@ -40,6 +40,9 @@ pip3 install django
 
 pip3 install django-allauth
 
+pip3 install pyqrcode, uuid
+
+pip3 install pypng
 
 
 ./manage.py makemigrations
