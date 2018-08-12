@@ -127,17 +127,16 @@ class BaseItems(models.Model):
         max_length=64)
 
     item_type_list = (
-        ('cloth','cloth'),
-        ('chainmail','chainmail'),
-        ('plate','plate'),
-        ('tool','tool'),
-        ('resource','resource'))
+        ('cloth','ткань'),
+        ('chainmail','кольчуга'),
+        ('plate','латы'),
+        ('tool','инструменты'),
+        ('resource','ресурсы'))
 
     item_type = models.CharField('тип предмета',
         choices=item_type_list,
         default='cloth',
-        max_length=32)
-    
+        max_length=32) 
    
     class Meta:
         verbose_name = 'База Предметов'
@@ -147,6 +146,35 @@ class BaseItems(models.Model):
         return "[{}] {}".format(
             self.id_item,
             self.item_name,
+        )
+
+class Inventory(models.Model):
+    '''
+    ====inventory================
+    | id_owner | id_item | slot |
+    | 37       | 1001    | 9    |
+  
+    '''
+
+    id_owne = models.IntegerField(default=0)
+    id_item = models.CharField(max_length=64)
+    slot_list = (
+        (8,'8_пояс'),
+        (9,'9_сумка')
+    )
+    slot = models.IntegerField(
+        choices=slot_list,
+        default=9)
+
+    
+    class Meta:
+        verbose_name = 'Инвентарь игроков'
+        verbose_name_plural = 'Инвентарь игроков'
+
+    def __str__(self):
+        return "[{}] {}".format(
+            self.id_owner,
+            self.id_item,
         )
 
 def inventar_default():

@@ -3,3 +3,5 @@ venv
 *.pyc
 *.swp
 gunicorn.conf.py
+static1/*
+static/*
